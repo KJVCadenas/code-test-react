@@ -75,7 +75,9 @@ const LaunchList = () => {
                 image: launch.links.mission_patch_small,
                 articleLink: launch.links.article_link,
                 videoLink: launch.links.video_link,
-                details: launch.details
+                details: launch.details,
+                launch_success: launch.launch_success,
+                upcoming: launch.upcoming
               }} />
             </div>
           );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Card, CardContent, Typography, Collapse, Button, Grid2 } from '@mui/material';
+import { Box, Card, CardContent, Typography, Collapse, Button, Chip } from '@mui/material';
 import { formatDistanceToNow } from 'date-fns';
 
 const MissionCard = ({ mission }) => {
@@ -12,10 +12,25 @@ const MissionCard = ({ mission }) => {
     const launchDate = new Date(mission.date);
     const timeAgo = formatDistanceToNow(launchDate, { addSuffix: true });
 
+    const getStatusChip = () => {
+        if (mission.upcoming) {
+            return <Chip label="Upcoming" sx={{background:"#90caf9"}} />;
+        } else if (mission.launch_success) {
+            return <Chip label="Success" sx={{background:"#66bb6a"}}/>;
+        } else {
+            return <Chip label="Failed" sx={{background:"#f44336"}}/>;
+        }
+    };
+
     return (
         <Card sx={{ mt: '10px', mb: '10px' }}>
             <CardContent>
-                <Typography variant="h5" sx={{ mt: "10px", mb: "10px" }}>{mission.name}</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: '10px' }}>
+                    <Typography variant="h5" sx={{ mr: 2 }}>
+                        {mission.name}
+                    </Typography>
+                    {getStatusChip()}
+                </Box>
                 <Collapse in={showDetails}>
                     <Typography variant="body2" color="textSecondary" sx={{ mt: "5px", mb: "5px" }}>
                         {timeAgo} | <a href={mission.articleLink}>Article</a> | <a href={mission.videoLink}>Video</a>
